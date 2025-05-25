@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-zns_e2$)52_-9hf*unslzo5&2c3hrdaf(0o1#@h2f)%wscq#oe'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
     'localhost',
@@ -82,7 +82,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'blogicum.wsgi.application'
-
+LOGIN_REDIRECT_URL = 'blog:index'
 CSRF_FAILURE_VIEW = 'pages.views.csrf_failure'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
