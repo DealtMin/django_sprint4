@@ -23,9 +23,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-zns_e2$)52_-9hf*unslzo5&2c3hrdaf(0o1#@h2f)%wscq#oe'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+]
 
 
 # Application definition
@@ -39,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'blog.apps.BlogConfig',
     'pages.apps.PagesConfig',
+    'django_bootstrap5',
     'debug_toolbar',
 ]
 
@@ -79,7 +83,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'blogicum.wsgi.application'
 
-
+CSRF_FAILURE_VIEW = 'pages.views.csrf_failure'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
