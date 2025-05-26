@@ -84,3 +84,29 @@ class Post(PublishedModel):
 
     def __str__(self):
         return self.title
+
+
+class Comments(models.Model):
+    text = models.TextField('Текст комментария')
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name='Добавлено'
+    )
+    author = models.ForeignKey(
+        User,
+        verbose_name='Автор комментария',
+        on_delete=models.CASCADE,
+    )
+    post = models.ForeignKey(
+        Post,
+        verbose_name='Публикации',
+        on_delete=models.CASCADE,
+    )
+
+    class Meta:
+        verbose_name = 'комментарий'
+        verbose_name_plural = 'Комментарии'
+        ordering = ('created_at',)
+
+    def __str__(self):
+        return self.text
