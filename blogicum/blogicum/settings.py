@@ -63,6 +63,10 @@ INTERNAL_IPS = [
 
 ROOT_URLCONF = 'blogicum.urls'
 
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+
+EMAIL_FILE_PATH = BASE_DIR / 'sent_emails'
+
 TEMPLATES_DIR = BASE_DIR / 'templates'
 
 TEMPLATES = [
@@ -84,6 +88,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'blogicum.wsgi.application'
 LOGIN_REDIRECT_URL = 'blog:index'
 CSRF_FAILURE_VIEW = 'pages.views.csrf_failure'
+
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
@@ -138,5 +143,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR / 'static_dev',
 ]
+
+MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

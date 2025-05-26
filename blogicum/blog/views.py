@@ -1,8 +1,10 @@
 from django.contrib.auth.models import User
+from django.contrib.auth import get_user
 from django.shortcuts import get_object_or_404, render
-from .accessory import get_public_posts, pagination
+from .accessory import get_public_posts, pagination, get_all_posts
 from .models import Category, Comments, Post
 from .forms import CommentsForm, PostsForm
+from django.contrib.auth.decorators import login_required
 
 
 def index(request):
@@ -14,7 +16,8 @@ def index(request):
 
 def post_detail(request, post_id):
     template = 'blog/detail.html'
-    form = CommentsForm()
+    data = {'author': get_user(request).pk, 'post': post_id}
+    form = CommentsForm(initial=data)
     post = get_object_or_404(
         get_public_posts(),
         pk=post_id
@@ -46,9 +49,16 @@ def category_posts(request, category_slug):
 def work_with_post(request, post_id=None):
     if post_id is not None:
         instance = get_object_or_404(Post, pk=post_id)
+        data = None
     else:
         instance = None
-    form = PostsForm(request.POST or None, instance=instance)
+        data = {'author': get_user(request).pk}
+    form = PostsForm(
+        request.POST or None,
+        files=request.FILES or None,
+        initial=data,
+        instance=instance
+    )
     context = {'form': form}
     if form.is_valid():
         form.save()
@@ -59,13 +69,17 @@ def work_with_post(request, post_id=None):
 def view_profile(request, user_name):
     template = 'blog/profile.html'
     profile = get_object_or_404(User, username=user_name)
-    page_obj = get_public_posts().filter(author=profile.pk)
+    if profile.pk == get_user(request).pk:
+        page_obj = get_all_posts(profile.pk)
+    else:
+        page_obj = get_public_posts().filter(author=profile.pk)
     context = {'profile': profile,
                'page_obj': page_obj
                }
     return render(request, template, context)
 
 
+@login_required
 def work_with_comment(request, post_id, comment_id=None):
     if comment_id is not None:
         instance = get_object_or_404(Comments, pk=comment_id)
