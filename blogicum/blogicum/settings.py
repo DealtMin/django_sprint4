@@ -85,8 +85,14 @@ TEMPLATES = [
     },
 ]
 
+PAGE_SIZE = 10
+
 WSGI_APPLICATION = 'blogicum.wsgi.application'
+
+LOGIN_URL = 'login'
+
 LOGIN_REDIRECT_URL = 'blog:index'
+
 CSRF_FAILURE_VIEW = 'pages.views.csrf_failure'
 
 # Database

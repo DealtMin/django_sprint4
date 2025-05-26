@@ -87,7 +87,7 @@ class Post(PublishedModel):
         return self.title
 
 
-class Comments(models.Model):
+class Comment(models.Model):
     text = models.TextField('Текст комментария')
     created_at = models.DateTimeField(
         auto_now_add=True,
@@ -102,12 +102,13 @@ class Comments(models.Model):
         Post,
         verbose_name='Публикации',
         on_delete=models.CASCADE,
+        related_name='comments'
     )
 
     class Meta:
         verbose_name = 'комментарий'
         verbose_name_plural = 'Комментарии'
-        ordering = ('-created_at',)
+        ordering = ('created_at',)
 
     def __str__(self):
         return self.text

@@ -1,11 +1,11 @@
-from .models import Post, Comments
+from .models import Post, Comment
 from django import forms
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
 
-class PostsForm(forms.ModelForm):
+class PostForm(forms.ModelForm):
 
     class Meta:
         model = Post
@@ -18,10 +18,10 @@ class PostsForm(forms.ModelForm):
         }
 
 
-class CommentsForm(forms.ModelForm):
+class CommentForm(forms.ModelForm):
 
     class Meta:
-        model = Comments
+        model = Comment
         # fields = '__all__'
         fields = ('text',)
 
